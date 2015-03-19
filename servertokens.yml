@@ -1,0 +1,10 @@
+---
+- hosts: all
+  tasks:
+  - name: Replace ServerTokens in Apache2 configuration (Debian)
+    replace: dest=/etc/apache2/conf-available/security.conf regexp='^ServerTokens (OS|Full|Major|Minor)$' replace='ServerTokens Prod' backup=yes
+    when: ansible_os_family == "Debian"
+  - name: Replace ServerTokens in Apache2 configuration (RedHat)
+    replace: dest=/etc/httpd/conf/httpd.conf regexp='^ServerTokens (OS|Full|Major|Minor)$' replace='ServerTokens Prod' backup=yes
+    when: ansible_os_family == "RedHat"
+
